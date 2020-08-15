@@ -1,0 +1,7 @@
+{
+  "name": "ftApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
