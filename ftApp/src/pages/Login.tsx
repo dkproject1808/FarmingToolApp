@@ -1,18 +1,13 @@
 import React from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonPage, IonInput, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonThumbnail, IonIcon } from '@ionic/react';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonPage, IonInput, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonThumbnail, IonIcon, IonImg } from '@ionic/react';
+import { image } from 'ionicons/icons';
 
 const Login: React.FC = () =>  {
     return(
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle class="ion-text-center">
-                        <img width="80" height="80" alt="ft-logo" src="../img/Logo_Farmingtool_12.png"></img>
-                    </IonTitle>
-                </IonToolbar>
-            </IonHeader>
             <IonContent>
-                <div>
+                <div id="background-login">
+                <IonImg src="img/Logo_Farmingtool_12.png"/>
                     <IonGrid>
                         <IonRow>
                             <IonCol>

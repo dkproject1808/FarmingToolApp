@@ -1,0 +1,8 @@
+#background-login {
+    background-image: url("img/pexels-pixabay-265216.jpg");
+    background: linear-gradient(to bottom, transparent, #ffffff),
+    url("img/pexels-pixabay-265216.jpg");
+    background-size: 1200px;
+    width: 411px;
+    height: 670px;
+}
