@@ -1,8 +1,30 @@
 #background-login {
-    background-image: url("img/pexels-pixabay-265216.jpg");
-    background: linear-gradient(to bottom, transparent, #ffffff),
-    url("img/pexels-pixabay-265216.jpg");
-    background-size: 1200px;
-    width: 411px;
-    height: 670px;
+    background: linear-gradient(to top, transparent, #ffffff),
+    url("img/background_landscape.jpg");
+}
+
+#login-grid {
+    height: 30rem;
+}
+
+#login-window {
+    margin-top: 8rem;
+    opacity: 0.8;
+}
+
+#login-grid ion-row {
+    height: 50%;
+}
+
+ion-icon {
+    color:#3C783C;
+  }
+
+  #position {
+      margin-top: 12rem;
+  }
+
+#profilepic {
+    height: 96px;
+    width: 96px;
 }

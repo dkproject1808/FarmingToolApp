@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route} from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -10,9 +10,9 @@ import {
   IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, mapOutline, listOutline} from 'ionicons/icons';
+import {mapOutline, listOutline} from 'ionicons/icons';
 import Login from './pages/Login'
-import Register from './pages/Register'
+import Overview from './pages/Overview'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -32,31 +32,34 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const App: React.FC = () => (
-  <IonApp>
-   <IonReactRouter>
-     <IonTabs>
-     <IonRouterOutlet>
-        <Route path="/" exact>
-          <Login/>
-        </Route>
-        <Route path="/register">
-          <Register/>
-        </Route>
-      </IonRouterOutlet>
-      <IonTabBar slot="bottom">
-        <IonTabButton href="/map">
-            <IonIcon icon={mapOutline}/>
-            <IonLabel>Karte</IonLabel>
-        </IonTabButton>
-        <IonTabButton href="/list">
-              <IonIcon icon={listOutline}/>
-              <IonLabel>Liste</IonLabel>
-        </IonTabButton>
-      </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
 
+  return(
+    <React.Fragment>
+      <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+        <IonRouterOutlet>
+            <Route path="/" exact>
+              <Login/>
+            </Route>
+            <Route path="/overview">
+              <Overview/>
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton href="/map">
+                <IonIcon icon={mapOutline}/>
+                <IonLabel>Karte</IonLabel>
+            </IonTabButton>
+            <IonTabButton href="/list">
+                  <IonIcon icon={listOutline}/>
+                  <IonLabel>Liste</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+          </IonTabs>
+        </IonReactRouter>
+      </IonApp>
+  </React.Fragment>);
+}
 export default App;
