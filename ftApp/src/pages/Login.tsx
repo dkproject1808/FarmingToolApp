@@ -1,49 +1,37 @@
 import React, { useState, useRef } from 'react';
-import { IonContent, IonButton, IonPage, IonInput, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonImg, IonAvatar, IonChip, IonIcon, IonHeader } from '@ionic/react';
+import { IonContent, IonButton, IonPage, IonInput, IonGrid, IonRow, IonCol, IonItem, IonLabel, IonImg, IonAvatar, IonChip, IonIcon, IonHeader, IonText, IonAlert } from '@ionic/react';
 import { personOutline, lockClosedOutline, personCircleOutline } from 'ionicons/icons';
 
-import axios from 'axios';
 import { Plugins } from '@capacitor/core';
-import { isNull, isNullOrUndefined } from 'util';
+import AuthContext from '../components/AuthProvider';
+import {useHistory} from "react-router";
 
 const Login: React.FC = () => {
+    const {authRequest} = React.useContext(AuthContext);
+    const [loginFail, setLoginFail] = useState(false);
+    const history = useHistory();
 
     const email = useRef<HTMLIonInputElement>(null);
     const password = useRef<HTMLIonInputElement>(null);
 
     const { Storage } = Plugins;
 
-    const authRequest = () => {
+    const login = async () => {
 
-        const enteredEmail = "" + email.current!.value;
-        const enteredPassword = "" + password.current!.value;
+        const enteredEmail = email.current!.value;
+        const enteredPassword = password.current!.value;
 
-        console.log(enteredEmail + "     " + enteredPassword)
-        axios.post("http://localhost:8000/api/login", {}, {
-            data: {
-                email: enteredEmail,
-                password: enteredPassword
-            },
-        }).then((response) => {
-            console.log(response);
-            if (isNullOrUndefined(getLocalToken())) {
-                console.log("Storage erstellen")
-                const obj = JSON.parse(response.config.data)
-                //console.log(obj.email)
-                Storage.set({
-                    key: obj.email,
-                    value: JSON.stringify({
-                        token: response.data.access_token,
-                    })
-                });
-            } else {
-                console.log("TOKEN IN DB vorhanden!")
-            }
-        }, (error) => {
-            console.log(error);
-        });
-
+        let result = await authRequest(enteredEmail, enteredPassword);
+        console.log("RESULT::::"+result)
+        if(result) {
+            history.replace("/overview");
+            return result;
+        } else {
+            setLoginFail(true)
+            return result;
+        }
     };
+
     const getLocalToken = () => {
         const value = Storage.get({ key: 'admin@example.com' });
         console.log('Got item: ', value);
@@ -56,6 +44,13 @@ const Login: React.FC = () => {
 
     return (
         <IonPage>
+            <IonAlert
+                isOpen={loginFail}
+                onDidDismiss={() => setLoginFail(false)}
+                subHeader={'Login Failed'}
+                message={'Failed to Login! Email or Password might be wrong!'}
+                buttons={['Try again']}
+            />
             <IonContent>
                 <IonGrid fixed id="login-grid">
                     <IonRow>
@@ -89,7 +84,7 @@ const Login: React.FC = () => {
                                         </IonItem>
                                     </IonCol>
                                     <IonCol offset="1" size="10">
-                                        <IonButton onClick={authRequest} routerLink="/overview" expand="block" color="success">Login</IonButton>
+                                        <IonButton onClick={login} expand="block" color="success">Login</IonButton>
                                     </IonCol>
                                 </IonRow>
                             </IonGrid>
