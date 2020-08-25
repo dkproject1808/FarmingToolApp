@@ -28,3 +28,16 @@ ion-icon {
     height: 96px;
     width: 96px;
 }
+
+:root {
+    --ion-toolbar-background: var(--ion-color-primary);
+    --ion-tab-bar-background: var(--ion-color-light);
+    --ion-tab-bar-color-selected: var(--ion-color-secondary);
+    --ion-toolbar-color: var(--ion-color-secondary-contrast);
+  }
+
+  ion-button {
+  --background: var(--ion-color-secondary);
+  --selected: var(--ion-color-primary);
+
+}

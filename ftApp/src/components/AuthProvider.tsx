@@ -54,6 +54,8 @@ export const AuthProvider: React.FC = ({children}) => {
                 console.log("WRONG PASSWORD OR EMAIL");
             } else if(error.response.status == 503) {
                 console.log("REQUEST FAILED BECAUSE OF BACKEND")
+            } else {
+                console.log("UNDEFINED")
             }
             resolve(false);
         });

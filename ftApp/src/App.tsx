@@ -18,9 +18,10 @@ import {
   IonMenuToggle
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { mapOutline, listOutline, options } from 'ionicons/icons';
+import { leafOutline, serverOutline, barChartOutline, constructOutline, documentOutline, settingsOutline } from 'ionicons/icons';
 import Login from './pages/Login'
 import Overview from './pages/Overview'
+import BaseData from './pages/BaseData';
 import Filter from './components/Filter'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -41,19 +42,20 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import AuthContext from './components/AuthProvider'
+import NavTabs from './pages/NavTabs';
 
 const App: React.FC = () => {
 
-  const {authValues} = React.useContext(AuthContext);
+  // const { authValues } = React.useContext(AuthContext);
 
   return (
     <React.Fragment>
       <IonApp>
-        {!authValues.authenticated ? (
+        {/* {!authValues.authenticated ? (
           <IonReactRouter>
-            <Route path="/login" component={Login} exact={true}/>
-            <Route path="/" render={() => <Redirect to="/login"/>} exact/>
-          </IonReactRouter>) : (
+            <Route path="/login" component={Login} exact={true} />
+            <Route path="/" render={() => <Redirect to="/login" />} exact />
+          </IonReactRouter>) : ( */}
             <IonReactRouter>
               <IonMenu contentId="main">
                 <IonHeader>
@@ -64,44 +66,60 @@ const App: React.FC = () => {
                 <IonContent>
                   <IonMenuToggle>
                     <IonList>
-                      <IonItem button routerLink="/filter">
-                        <IonIcon slot="start" icon={options}></IonIcon>
-                        <IonLabel>Filter</IonLabel>
+                      <IonItem button routerLink="/main/basedata">
+                        <IonIcon slot="start" icon={serverOutline}></IonIcon>
+                        <IonLabel>Stammdaten</IonLabel>
                       </IonItem>
                     </IonList>
                   </IonMenuToggle>
                   <IonMenuToggle>
+                  <IonMenuToggle>
                     <IonList>
-                      <IonItem button routerLink="/overview">
-                        <IonIcon slot="start" icon={options}></IonIcon>
-                        <IonLabel>Overview</IonLabel>
+                      <IonItem button routerLink="/main/filter">
+                        <IonIcon slot="start" icon={leafOutline}></IonIcon>
+                        <IonLabel>Ressourcen</IonLabel>
                       </IonItem>
                     </IonList>
                   </IonMenuToggle>
+                  <IonMenuToggle>
+                  </IonMenuToggle>
+                    <IonList>
+                      <IonItem button routerLink="/main/overview">
+                        <IonIcon slot="start" icon={documentOutline}></IonIcon>
+                        <IonLabel>Dokumente</IonLabel>
+                      </IonItem>
+                    </IonList>
+                    <IonList>
+                      <IonItem button routerLink="/main/filter">
+                        <IonIcon slot="start" icon={constructOutline}></IonIcon>
+                        <IonLabel>Mein Betrieb</IonLabel>
+                      </IonItem>
+                    </IonList>
+                    <IonMenuToggle>
+                    <IonList>
+                      <IonItem button routerLink="/main/filter">
+                        <IonIcon slot="start" icon={settingsOutline}></IonIcon>
+                        <IonLabel>Einstellungen</IonLabel>
+                      </IonItem>
+                    </IonList>
+                  </IonMenuToggle>
+                  </IonMenuToggle>
                 </IonContent>
               </IonMenu>
-              <IonTabs>
-                <IonRouterOutlet id="main">
-                  <Route path="/filter" exact>
-                    <Filter/>
-                  </Route>
-                  <Route path="/overview">
-                    <Overview />
-                  </Route>
-                </IonRouterOutlet>
-                <IonTabBar slot="bottom">
-                  <IonTabButton href="/map">
-                    <IonIcon icon={mapOutline} />
-                    <IonLabel>Karte</IonLabel>
-                  </IonTabButton>
-                  <IonTabButton href="/list">
-                    <IonIcon icon={listOutline} />
-                    <IonLabel>Liste</IonLabel>
-                  </IonTabButton>
-                </IonTabBar>
-              </IonTabs>
+              <IonRouterOutlet id="main">
+                <Route path="/filter" exact>
+                  <Filter />
+                </Route>
+                <Route path="/basedata" exact>
+                  <BaseData />
+                </Route>
+                <Route path="/main">
+                  <NavTabs />
+                </Route>
+                <Redirect path="" to="/main" exact />
+              </IonRouterOutlet>
             </IonReactRouter>
-          )}
+          {/* )} */}
       </IonApp>
     </React.Fragment>);
 }
