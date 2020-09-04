@@ -22,7 +22,7 @@ import { leafOutline, serverOutline, barChartOutline, constructOutline, document
 import Login from './pages/Login'
 import Overview from './pages/Overview'
 import BaseData from './pages/BaseData';
-import Filter from './components/Filter'
+import Map from './pages/Map'
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -43,6 +43,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import AuthContext from './components/AuthProvider'
 import NavTabs from './pages/NavTabs';
+import Fields from './pages/Fields';
 
 const App: React.FC = () => {
 
@@ -75,7 +76,7 @@ const App: React.FC = () => {
                   <IonMenuToggle>
                   <IonMenuToggle>
                     <IonList>
-                      <IonItem button routerLink="/main/filter">
+                      <IonItem button routerLink="/main/map">
                         <IonIcon slot="start" icon={leafOutline}></IonIcon>
                         <IonLabel>Ressourcen</IonLabel>
                       </IonItem>
@@ -90,14 +91,14 @@ const App: React.FC = () => {
                       </IonItem>
                     </IonList>
                     <IonList>
-                      <IonItem button routerLink="/main/filter">
+                      <IonItem button routerLink="/main/map">
                         <IonIcon slot="start" icon={constructOutline}></IonIcon>
                         <IonLabel>Mein Betrieb</IonLabel>
                       </IonItem>
                     </IonList>
                     <IonMenuToggle>
                     <IonList>
-                      <IonItem button routerLink="/main/filter">
+                      <IonItem button routerLink="/main/map">
                         <IonIcon slot="start" icon={settingsOutline}></IonIcon>
                         <IonLabel>Einstellungen</IonLabel>
                       </IonItem>
@@ -107,11 +108,14 @@ const App: React.FC = () => {
                 </IonContent>
               </IonMenu>
               <IonRouterOutlet id="main">
-                <Route path="/filter" exact>
-                  <Filter />
+                <Route path="/map" exact>
+                  <Map />
                 </Route>
                 <Route path="/basedata" exact>
                   <BaseData />
+                </Route>
+                <Route path="/fields" exact>
+                  <Fields />
                 </Route>
                 <Route path="/main">
                   <NavTabs />

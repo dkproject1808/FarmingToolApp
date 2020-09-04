@@ -47,7 +47,7 @@ const BaseData: React.FC = () => {
                 <br/>
                 <IonItem color="light" button onClick={showItemHandler}>
                     <IonLabel>
-                        <IonButton expand="block" href="/main/BaseData/driver">
+                        <IonButton expand="block" href="/main/BaseData/Machines">
                             Maschinen
                         </IonButton>
                     </IonLabel>
@@ -55,7 +55,7 @@ const BaseData: React.FC = () => {
                 <br/>
                 <IonItem color="light" button onClick={showItemHandler}>
                     <IonLabel>
-                        <IonButton expand="block" href="/main/BaseData/driver">
+                        <IonButton expand="block" href="/main/BaseData/addresses">
                             Addressen
                         </IonButton>
                     </IonLabel>

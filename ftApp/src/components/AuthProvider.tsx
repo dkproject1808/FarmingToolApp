@@ -7,7 +7,7 @@ import { isContext } from 'vm';
 
 export const Context = React.createContext<any>(undefined);
 
-export const AuthProvider: React.FC = ({children}) => {
+export const AuthProvider: React.FC = ({ children }) => {
 
     const [authValues, setAuthValues] = React.useState({
         authenticated: false
@@ -17,18 +17,18 @@ export const AuthProvider: React.FC = ({children}) => {
 
     const { Storage } = Plugins;
 
-    const authRequest = (user:string, password:string) => {
+    const authRequest = (user: string, password: string) => {
 
-        console.log(user +" PW: "+ password)
-        
-        return new Promise((resolve) =>{
+        console.log(user + " PW: " + password)
+
+        return new Promise((resolve) => {
             axios.post("http://localhost:8000/api/login", {}, {
-            data: {
-                email: user,
-                password: password
-            },
-        }).then((response) => {
-            console.log("ERGEBNIS REQUEST"+response.config.data + "STATUS:"+response.status);
+                data: {
+                    email: user,
+                    password: password
+                },
+            }).then((response) => {
+                console.log("ERGEBNIS REQUEST" + response.config.data + "STATUS:" + response.status);
                 console.log("STATUS 200 OK")
                 setAuthValues({
                     authenticated: true
@@ -47,18 +47,18 @@ export const AuthProvider: React.FC = ({children}) => {
                     console.log("TOKEN IN DB vorhanden!")
                 }
                 resolve(true);
-        }).catch(
-        (error) => {
-            console.log(error.response);
-            if(error.response.status == 401){
-                console.log("WRONG PASSWORD OR EMAIL");
-            } else if(error.response.status == 503) {
-                console.log("REQUEST FAILED BECAUSE OF BACKEND")
-            } else {
-                console.log("UNDEFINED")
-            }
-            resolve(false);
-        });
+            }).catch(
+                (error) => {
+                    console.log(error.response);
+                    if (error.response.status == 401) {
+                        console.log("WRONG PASSWORD OR EMAIL");
+                    } else if (error.response.status == 503) {
+                        console.log("REQUEST FAILED BECAUSE OF BACKEND")
+                    } else {
+                        console.log("UNDEFINED")
+                    }
+                    resolve(false);
+                });
         })
     };
 

@@ -12,10 +12,6 @@ const Overview: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                {/* 
-                    
-
-                 */}
                 <IonToolbar>
                     <IonGrid>
                         <IonRow>
@@ -26,54 +22,18 @@ const Overview: React.FC = () => {
                             </IonCol>
                             <IonCol className="ion-text-center" size-md="4">
                                 <IonLabel>
-                                    Flächenverwaltung
+                                    Dashboard
                                 </IonLabel>
                             </IonCol>
                             <IonCol size-md="4">
-                                <IonFab vertical="center" horizontal="end">
-                                    <IonFabButton color="secondary">
-                                        <IonIcon color="light" icon={addOutline} />
-                                    </IonFabButton>
-                                </IonFab>
+
                             </IonCol>
                         </IonRow>
                     </IonGrid>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonItem>
-                    <IonLabel>
-                        <h2>Feld25</h2>
-                        <p> Ort, Größe, Kultur...</p>
-                    </IonLabel>
-                </IonItem>
-                <IonItem>
-                    <IonLabel>
-                        <h2>Feld50</h2>
-                        <p> Ort, Größe, Kultur...</p>
-                    </IonLabel>
-                </IonItem>
-                <IonItem>
-                    <IonLabel>
-                        <h2>Feld75</h2>
-                        <p> Ort, Größe, Kultur...</p>
-                    </IonLabel>
-                </IonItem>
-                <IonItem>
-                <IonThumbnail slot="end">
-                            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
-                        </IonThumbnail>
-                    <IonLabel>
-                        <h2>Feld100</h2>
-                        <p> Ort, Größe, Kultur...</p>
-                    </IonLabel>
-                </IonItem>
-                <IonItem>
-                    <IonLabel>
-                        <h2>Feld125</h2>
-                        <p> Ort, Größe, Kultur...</p>
-                    </IonLabel>
-                </IonItem>
+
             </IonContent>
         </IonPage>
     )
