@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import { IonModal, IonHeader, IonToolbar, IonContent, IonButton, IonItem, IonLabel, IonGrid, IonRow, IonCol, IonInput, IonTitle } from '@ionic/react';
-
+import { SQLite, SQLiteObject, SQLiteOriginal } from '@ionic-native/sqlite';
+import { SQLitePorter } from '@ionic-native/sqlite-porter';
 
 const Drivers_EditModal: React.FC<{
     show: boolean;
     onCancel: () => void;
     editedDriver: { id: string; title: string } | null;
 }> = props => {
+
+
+    // const addDriver = (vorname:string, nachname: string, fsk: string, bid: string, event: React.MouseEvent) => {
+    //     event.stopPropagation()
+    //     return SQLite.create({ name: 'ftAppMobile.db', location: 'default' }).then((dbLite: SQLiteObject) => {
+    //         return dbLite.executeSql("insert into Drivers (Vorname, Nachname, Führerscheinklasse, BetriebID) values(), [])
+    //     })
+    // }
+
     return (
         <IonModal isOpen={props.show}>
             <IonHeader>

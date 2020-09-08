@@ -13,9 +13,10 @@ import Map from './Map';
 import Overview from './Overview';
 import BaseData from "./BaseData";
 import Fields from "./Fields";
-import Driver from "./BaseDataSubMenue/Driver";
 import Machines from "./BaseDataSubMenue/Machines";
 import Addresses from "./BaseDataSubMenue/Addresses";
+import Driver from "./BaseDataSubMenue/Driver";
+import DriverController from "../controllers/driver.controller";
 
 const NavTabs: React.FC = () => {
     return (
@@ -36,7 +37,7 @@ const NavTabs: React.FC = () => {
                         <Map />
                     </Route>
                     <Route path="/main/BaseData/driver" exact>
-                        <Driver />
+                        <DriverController/>
                     </Route>
                     <Route path="/main/BaseData/machines" exact>
                         <Machines />

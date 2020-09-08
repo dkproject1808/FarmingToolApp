@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonButton, IonItem, IonAvatar, IonMenuButton, IonCard, IonCardContent, IonIcon, IonLabel, IonFabButton, IonFab, IonImg, IonThumbnail, IonItemSliding, IonItemOptions, IonItemOption, IonTitle, IonText, IonAlert, IonToast, IonModal } from '@ionic/react';
-import { addOutline, trash, trashOutline, syncCircleOutline, syncOutline } from 'ionicons/icons';
+import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonButton, IonItem, IonAvatar, IonMenuButton, IonCard, IonCardContent, IonIcon, IonLabel, IonFabButton, IonFab, IonImg, IonThumbnail, IonItemSliding, IonItemOptions, IonItemOption, IonTitle, IonText, IonAlert, IonToast} from '@ionic/react';
+import { addOutline } from 'ionicons/icons';
 
 import Fields_EditingModal from '../components/Fields_components/Fields_EditModal';
 import Fields_SlidingItems from '../components/Fields_components/Fields_SlidingItems';
@@ -15,6 +15,7 @@ export const DummyData = [
 ];
 
 const Fields: React.FC = () => {
+
     //Alert States Boolean
     const [deleteState, setDelete] = useState(false);
     //Toast States Boolean

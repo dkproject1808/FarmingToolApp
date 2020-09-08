@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonButton, IonItem, IonAvatar, IonMenuButton, IonCard, IonCardContent, IonIcon, IonLabel, IonFabButton, IonFab, IonImg, IonThumbnail, IonItemSliding, IonItemOptions, IonItemOption, IonTitle, IonText, IonAlert, IonToast, IonModal } from '@ionic/react';
+import { IonHeader, IonToolbar, IonContent, IonPage, IonButtons, IonBackButton, IonGrid, IonRow, IonCol, IonButton, IonItem, IonAvatar, IonMenuButton, IonCard, IonCardContent, IonIcon, IonLabel, IonFabButton, IonFab, IonImg, IonThumbnail, IonItemSliding, IonItemOptions, IonItemOption, IonTitle, IonText, IonAlert, IonToast, IonModal, useIonViewDidEnter, IonInput } from '@ionic/react';
+import { SQLite, SQLiteObject, SQLiteOriginal } from '@ionic-native/sqlite';
 import { addOutline, trash, trashOutline, syncCircleOutline, syncOutline } from 'ionicons/icons';
 import { useParams } from 'react-router';
 import Driver_EditingModal from '../../components/Drivers_components/Driver_EditModal';
@@ -12,7 +13,9 @@ export const DummyData = [
     { id: 'f5', title: 'Test Fahrer 5' },
 ];
 
-const Driver: React.FC = () => {
+const Driver: React.FC<{
+    onStartAddDriver: () => void;
+}> = props => {
     //Alert States Boolean
     const [deleteState, setDelete] = useState(false);
     //Toast States Boolean
@@ -20,6 +23,13 @@ const Driver: React.FC = () => {
     //Editing Modal State Boolean
     const [isEditing, setIsEditing] = useState(false);
     const [selectedDriver, setSelectedDriver] = useState<any>();
+    const [dbState, setDBState] = useState<SQLiteObject>()
+    const [driverState, setDriverState] = useState<any>()
+
+
+    useIonViewDidEnter(() => {
+        loadDrivers()
+    });
 
     const deleteMessageHandler = () => {
         setDelete(false);
@@ -58,6 +68,32 @@ const Driver: React.FC = () => {
         setSelectedDriver(null);
     }
 
+    const loadDrivers = () => {
+        SQLite.create({ name: 'ftAppMobile.db', location: 'default' }).then((dbLite: SQLiteObject) => {
+            try {
+                return dbLite.executeSql("Select * FROM drivers", []).then(data => {
+                    let drivers = [];
+                    console.log(data)
+                    console.log(data.rows.item(1).Vorname)
+                    if (data.rows.length > 0) {
+                        for (var i = 0; i < data.rows.length; i++) {
+                            drivers.push({
+                                id: data.rows.item(i).id,
+                                vorname: data.rows.item(i).Vorname,
+                                nachname: data.rows.item(i).Nachname
+                            });
+                            console.log(data.rows.item(i).id + ' ' + data.rows.item(i).Nachname)
+                        }
+                    }
+                    setDriverState(drivers);
+                    console.log(drivers + " FAHRER")
+                    console.log(driverState + ' STATE')
+                });
+            } catch (error) {
+                alert(error)
+            }
+        })
+    }
     return (
         <React.Fragment>
             <Driver_EditingModal editedDriver={selectedDriver} show={isEditing} onCancel={cancelDriverEditingHandler} />
@@ -102,7 +138,7 @@ const Driver: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>
-                    {DummyData.map(driver => (
+                    {driverState?.map((driver: { id: string; vorname: React.ReactNode; nachname: React.ReactNode; }) => (
                         <IonItemSliding key={driver.id}>
                             <IonItemOptions>
                                 <IonItemOption onClick={startDeleteDriverHandler} color="danger">
@@ -120,12 +156,13 @@ const Driver: React.FC = () => {
                             </IonItemOptions>
                             <IonItem button>
                                 <IonLabel>
-                                    <h2>{driver.title}</h2>
-                                    <p> Vorname, Nachname, Führerscheinklasse...</p>
+                                    <h2>{driver.id}: {driver.nachname}</h2>
+                                    <p>Drücken oder ziehen für weitere Option</p>
                                 </IonLabel>
                             </IonItem>
                         </IonItemSliding>
                     ))}
+                    <IonButton onClick={props.onStartAddDriver}/>
                 </IonContent>
             </IonPage>
         </React.Fragment>

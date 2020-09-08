@@ -1,53 +1,59 @@
-import React from "react";
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonMenuButton, IonBackButton, IonButton } from "@ionic/react";
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { square } from "ionicons/icons";
+import React, { useState } from "react";
+import { IonPage, IonHeader, IonToolbar, IonContent, IonButtons, IonMenuButton, IonBackButton, IonButton,IonItem, IonLabel, useIonViewDidEnter, useIonViewWillEnter } from "@ionic/react";
+import { SQLite, SQLiteObject, SQLiteOriginal } from '@ionic-native/sqlite';
+import { SQLitePorter } from '@ionic-native/sqlite-porter';
+import { HTTP, HTTPResponse } from '@ionic-native/http';
+import { square, reload } from "ionicons/icons";
+import { Http2ServerRequest } from "http2";
 
 const Map: React.FC = () => {
+    const [dbState, setDBState] = useState<SQLiteObject>()
+    const [driverState, setDriverState] = useState<any>()
 
-    const testDB = () => {
+    useIonViewDidEnter(() => {
+        loadDrivers()
+      });
+      
 
-        // SQLite.create({
-        //   name: 'data.db',
-        //   location: 'default'
-        // }).then((result) => {
-        //   console.log("DONE");
-        //   console.log(result);
-        // }).catch((err) => {
-        //   console.log("ERROR");
-        //   console.log(err);
-        // });
+    // const importDatabase = () => {
+    //     const http = HTTP;
+    //     http.get('"http://localhost:8000/api/sqldump', { responseType: 'text' }, Headers).then((sqlString: HTTPResponse) => {
+    //         SQLitePorter.importSqlToDb(dbState, sqlString.data)
+    //     })
+    // }
 
-        SQLite.create({name: 'data.db', location: 'default'}).then(res => {
-            res.executeSql('CREATE TABLE IF NOT EXISTS mages(name VARCHAR(32))', [])
-            .then((res) => {
-                alert('CREATE MAGES:');
-                alert(res.toString());
-            })
-            .catch(e => alert(e));
-            res.executeSql("insert into mages (name) values ('gandalf');", [])
-            
-            .then((res) => {
-                alert('INSERT MAGES:');
-                alert(res.toString());
-            })
-            .catch(e => alert(e));
-            res.executeSql('select * from mages', [])
-            .then((res) => {
-                alert('SELECT MAGES:');
-                alert(res.toString());
-            })
-            .catch(e => alert(e));
-        });
-        // SQLite.echoTest().then(res => {
-        //     alert(JSON.stringify(res));
-        // });
-        // SQLite.selfTest().then(res => {
-        //     alert(JSON.stringify(res));
-        // });
-        
+    const loadDrivers = () => {
+        SQLite.create({ name: 'ftAppMobile.db', location: 'default' }).then((dbLite: SQLiteObject) => {
+            try {
+                return dbLite.executeSql("Select * FROM drivers", []).then(data => {
+                    let drivers = [];
+                    console.log(data)
+                    console.log(data.rows.item(1).Vorname)
+                    if (data.rows.length > 0) {
+                        for (var i = 0; i < data.rows.length; i++) {
+                            drivers.push({
+                                id: data.rows.item(i).id,
+                                vorname: data.rows.item(i).Vorname,
+                                nachname: data.rows.item(i).Nachname
+                            });
+                            console.log(data.rows.item(i).id + ' ' + data.rows.item(i).Nachname)
+                        }
+                    }
+                    setDriverState(drivers);
+                    console.log(drivers + " FAHRER")
+                    console.log(driverState + ' STATE')
+                });
+            } catch (error) {
+                alert(error)
+            }
+        })
+    }
 
-      }
+    const addDriver = () => {
+        SQLite.create({ name: 'ftAppMobile.db', location: 'default' }).then((dbLite: SQLiteObject) => {
+                return dbLite.executeSql("insert into Drivers (Vorname, Nachname, Führerscheinklasse, BetriebID) values('Detlef', 'Dete','L','1')", [])
+        })
+    }
     return <IonPage>
         <IonHeader>
             <IonToolbar>
@@ -60,9 +66,18 @@ const Map: React.FC = () => {
             <h2>
                 This is a Map
             </h2>
-            <IonButton onClick={testDB}>
-                Press for DB
+            <IonButton onClick={addDriver}>
+                Add Driver
             </IonButton>
+            {driverState?.map((driver: { vorname: React.ReactNode; nachname: React.ReactNode; }) => (
+                <IonItem button>
+                    <IonLabel>
+                        <h2>{driver.vorname}</h2>
+                        <h2>{driver.nachname}</h2>
+                        <p> Vorname, Nachname, Führerscheinklasse...</p>
+                    </IonLabel>
+                </IonItem>
+            ))}
         </IonContent>
     </IonPage>
 }
