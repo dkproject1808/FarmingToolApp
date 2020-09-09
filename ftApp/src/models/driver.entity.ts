@@ -6,10 +6,10 @@ export class Driver {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
+    @Column('text',{nullable:true})
     firstname!: string;
 
-    @Column()
+    @Column('text',{nullable:true})
     lastname!: string;
 }
 
